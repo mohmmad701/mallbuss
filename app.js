@@ -19,7 +19,7 @@ let userAttemptsCounter = 0;
 
 
 // global array for  all the objects
-let allGoats = [];//مستوجع عاضي
+let allGoats = [];//
 
 // constructor function
 function GoatImage(name, source) {
@@ -128,7 +128,7 @@ function handleUserClick(event) {
         let list = document.getElementById('result');
         let liElement;
         for (let i = 0; i < allGoats.length; i++) {
-            liElement = document.createElement('li');
+            liElement = document.createElement('hr');
             list.appendChild(liElement);
             liElement.textContent = `${allGoats[i].name} has ${allGoats[i].votes}  votes`;
 
