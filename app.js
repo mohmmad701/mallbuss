@@ -20,6 +20,9 @@ let userAttemptsCounter = 0;
 
 // global array for  all the objects
 let allGoats = [];//
+let ShownImgs=[];
+let clickedImgs=[];
+
 
 // constructor function
 function GoatImage(name, source) {
@@ -28,6 +31,7 @@ function GoatImage(name, source) {
 
     // votes
     this.votes = 0;
+    this .shown=0;
     allGoats.push(this);
 }
 new GoatImage('bag','images/bag.jpg'); //0
@@ -70,7 +74,9 @@ function renderThreeImages() {
 
     // do-while
     do {
+        leftImageIndex=generateRandomIndex();
         rightImageIndex = generateRandomIndex();
+        centerImageIndex=generateRandomIndex();
     } while (leftImageIndex === rightImageIndex === centerImageIndex);
 
     // console.log(leftImageIndex);
@@ -84,6 +90,13 @@ function renderThreeImages() {
     leftImageElement.src = allGoats[leftImageIndex].source;
     rightImageElement.src = allGoats[rightImageIndex].source;
     centerImageElement.src=allGoats[centerImageIndex].source;
+
+   //هذا غشان عدد المشهدات حتى لو ما كبست على الصوره
+    allGoats[leftImageIndex].shown++;
+    allGoats[centerImageIndex].shown++;
+    allGoats[rightImageIndex].shown++;
+
+
     
 }
 
@@ -124,15 +137,23 @@ function handleUserClick(event) {
         rightImageElement.removeEventListener('click', handleUserClick);
         centerImageElement.removeEventListener('click',handleUserClick);
 
-        // getting the element
-        let list = document.getElementById('result');
-        let liElement;
-        for (let i = 0; i < allGoats.length; i++) {
-            liElement = document.createElement('hr');
-            list.appendChild(liElement);
-            liElement.textContent = `${allGoats[i].name} has ${allGoats[i].votes}  votes`;
-
-        }
+        
     }
 }
 console.log(allGoats);
+
+let list = document.getElementById('result_one');
+        let button = document.getElementById('result_onee');
+        button.addEventListener('click',showResult);
+        
+        function showResult(){
+            for (let i = 0; i < allGoats.length; i++) {
+                ShownImgs.push(allGoats[i].shown);
+                clickedImgs.push(allGoats[i].votes);
+        
+        
+                let liElement = document.createElement('hr');
+                list.appendChild(liElement);
+                liElement.textContent = `${allGoats[i].name} has ${allGoats[i].votes}  votes and was seen ${allGoats[i].shown} times. `;
+            }
+        }
